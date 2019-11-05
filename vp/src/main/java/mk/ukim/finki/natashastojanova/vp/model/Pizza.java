@@ -11,12 +11,10 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-
 public class Pizza {
     private String name;
     private String description;
-    public Pizza(){}
 
-    //public Pizza(String name, String description) {
-    //}
+
+
 }
