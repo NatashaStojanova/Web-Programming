@@ -19,10 +19,12 @@ public class OrderRepository {
     }
 
     public List<Order> getOrders(){
+
         return this.orders;
     }
 
     public void addOrder(Order order){
+
         orders.add(order);
     }
 

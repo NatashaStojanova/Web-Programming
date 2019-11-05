@@ -14,7 +14,7 @@ public class PizzaRepository {
     List<Pizza> pizzas;
     public void init(){
         pizzas = new ArrayList<>();
-        Pizza p1 = new Pizza("Margherita","tomato sauce, mozzarella");
+        Pizza p1=new Pizza("ds","d");
         pizzas.add(p1);
         Pizza p2=new Pizza("Carbonara","(fresh cream, mozzarella, bacon)");
         pizzas.add(p2);
