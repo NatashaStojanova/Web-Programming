@@ -30,6 +30,7 @@ public class ShowPizza extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("doGet method -> SHOW PIZZA");
         HttpSession session=req.getSession();
         WebContext context = new WebContext(req, resp, req.getServletContext());
         List<Pizza> pizzas = pizzaService.listPizzas();

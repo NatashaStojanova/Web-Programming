@@ -33,6 +33,7 @@ public class ConfirmationInfo extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("doGet method -> CONFIRMATION INFO");
         resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         HttpSession session=req.getSession();
