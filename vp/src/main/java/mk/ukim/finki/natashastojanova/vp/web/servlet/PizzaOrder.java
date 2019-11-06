@@ -33,9 +33,17 @@ public class PizzaOrder extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         HttpSession session=req.getSession();
         WebContext context=new WebContext(req, resp, req.getServletContext());
-        resp.setContentType("text/html ; charset=UTF-8");
+        String selectedPizza= (String) session.getAttribute("selectedPizza");
+        req.getSession().setAttribute("selectedPizza", selectedPizza);
+        context.setVariable("selectedPizza", selectedPizza);
+
+        String size=req.getParameter("size");
+        req.getSession().setAttribute("size",size);
+        context.setVariable("size",size);
         this.springTemplateEngine.process("deliveryInfo.html",context,resp.getWriter());
     }
 }

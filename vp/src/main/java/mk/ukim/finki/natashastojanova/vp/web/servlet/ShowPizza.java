@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
  */
-@WebServlet(urlPatterns = "/pizza")
+@WebServlet(name="index", urlPatterns = "")
 public class ShowPizza extends HttpServlet {
 
     private PizzaService pizzaService;
@@ -35,6 +35,7 @@ public class ShowPizza extends HttpServlet {
         List<Pizza> pizzas = pizzaService.listPizzas();
         context.setVariable("pizzas", pizzas);
         resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         this.springTemplateEngine.process("listPizzas.html", context, resp.getWriter());
     }
 }

@@ -1,5 +1,6 @@
 package mk.ukim.finki.natashastojanova.vp.web.servlet;
 
+import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -28,10 +29,15 @@ public class PizzaSize extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession httpSession=req.getSession();
-        WebContext context=new WebContext(req,resp,req.getServletContext());
-        resp.setContentType("text/html ; charset=UTF-8");
-        this.springTemplateEngine.process("selectPizzaSize.html",context,resp.getWriter());
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        String selectedPizza=req.getParameter("selectedPizza");
+        req.getSession().setAttribute("selectedPizza", selectedPizza);
+        context.setVariable("selectedPizza", selectedPizza);
+        this.springTemplateEngine.process("selectPizzaSize.html", context, resp.getWriter());
+
+
 
     }
 }

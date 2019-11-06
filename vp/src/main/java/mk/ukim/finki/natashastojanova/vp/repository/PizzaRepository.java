@@ -1,8 +1,10 @@
 package mk.ukim.finki.natashastojanova.vp.repository;
 
+import lombok.AllArgsConstructor;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +12,13 @@ import java.util.List;
  * @author Konstantin Bogdanoski (konstantin.b@live.com)
  */
 @Repository
+@AllArgsConstructor
 public class PizzaRepository {
     List<Pizza> pizzas;
+    @PostConstruct
     public void init(){
         pizzas = new ArrayList<>();
-        Pizza p1=new Pizza("ds","d");
+        Pizza p1=new Pizza("Margherita","(tomato sauce, mozzarella)");
         pizzas.add(p1);
         Pizza p2=new Pizza("Carbonara","(fresh cream, mozzarella, bacon)");
         pizzas.add(p2);
@@ -37,6 +41,7 @@ public class PizzaRepository {
     }
 
     public List<Pizza> getAllPizzas(){
+
         return this.pizzas;
     }
 

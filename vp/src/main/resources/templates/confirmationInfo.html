@@ -1,4 +1,4 @@
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>WP lab - Confirmation Info</title>
@@ -29,31 +29,32 @@
         </tr>
         <tr>
             <td><b>Client Name </b></td>
-            <td>Petko Petkov</td>
+            <td><span th:text="${firstName}"></span></td>
         </tr>
         <tr>
             <td><b>Client Address </b></td>
-            <td>Partizanska 5, Skopje</td>
+            <td><span th:text="${address}"></span></td>
         </tr>
         <tr>
             <td><b>Client IP Address</b></td>
-            <td>127.0.0.1</td>
+            <td><span th:text="${ip}"></span></td>
         </tr>
         <tr>
             <td><b>Client Browser</b></td>
-            <td>Mozilla</td>
+            <td><span th:text="${browser}"></span></td>
         </tr>
         <tr>
             <td><b>Pizza Type </b></td>
-            <td>Margarita</td>
+            <td><span th:text="${selectedPizza}"></span></td>
         </tr>
         <tr>
             <td><b>Pizza Size </b></td>
-            <td>Large</td>
+            <td><span th:text="${size}"></span></td>
+
         </tr>
     </table>
     <div>
-        <a href="/pizza">Log out</a>
+        <a href="/">Log out</a>
     </div>
 </section>
 </body>

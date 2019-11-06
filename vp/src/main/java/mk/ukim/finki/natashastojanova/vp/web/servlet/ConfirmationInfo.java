@@ -1,5 +1,6 @@
 package mk.ukim.finki.natashastojanova.vp.web.servlet;
 
+import eu.bitwalker.useragentutils.UserAgent;
 import mk.ukim.finki.natashastojanova.vp.service.OrderService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
 import org.thymeleaf.context.WebContext;
@@ -32,8 +33,32 @@ public class ConfirmationInfo extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         HttpSession session=req.getSession();
         WebContext context=new WebContext(req,resp,req.getServletContext());
+        String selectedPizza= (String) session.getAttribute("selectedPizza");
+        req.getSession().setAttribute("selectedPizza", selectedPizza);
+        context.setVariable("selectedPizza", selectedPizza);
+
+        String size= (String) session.getAttribute("size");
+        req.getSession().setAttribute("size", size);
+        context.setVariable("size", size);
+
+        String firstName=req.getParameter("firstName");
+        req.getSession().setAttribute("firstName",firstName);
+        context.setVariable("firstName",firstName);
+
+        String address=req.getParameter("address");
+        req.getSession().setAttribute("address",address);
+        context.setVariable("address",address);
+
+        UserAgent userAgent = UserAgent.parseUserAgentString(req.getHeader("User-Agent"));
+        req.setAttribute("browser", userAgent.getBrowser().getName());
+        req.setAttribute("ip", req.getRemoteAddr());
+
+
+
         this.springTemplateEngine.process("confirmationInfo.html",context,resp.getWriter());
     }
 }
