@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ * @author Natasha Stojanova
  */
 @Service
 public class PizzaServiceImpl implements PizzaService {

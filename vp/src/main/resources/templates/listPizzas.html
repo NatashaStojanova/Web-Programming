@@ -6,26 +6,30 @@
         body {
             width: 800px;
             margin: auto;
+
         }
     </style>
 </head>
 <body>
 <header>
     <h1>Welcome to our Pizza Delivery App</h1>
+
 </header>
 <main>
     <h2>Choose pizza:</h2>
     <form method="get" th:action="@{/pizzaSize}">
         <ul>
-            <li th:each="pizza : ${pizzas}">
+            <li th:each="pizza : ${pizzas}" onclick="function Hello() {
+              
+            }">
             <span>
-                <input type="radio" th:name="selectedPizza" th:value="${pizza.name}"/>
+                <input type="radio" th:name="selectedPizza" th:value="${pizza.name}" required/>
                 <strong><label th:text="${pizza.name}"></label></strong> (<span th:text="${pizza.description}"></span>)
             </span>
                 <hr>
             </li>
         </ul>
-        <button type="submit" class="button-success">Next step</button>
+        <button type="submit" class="button-success">Next</button>
     </form>
 
 </main>

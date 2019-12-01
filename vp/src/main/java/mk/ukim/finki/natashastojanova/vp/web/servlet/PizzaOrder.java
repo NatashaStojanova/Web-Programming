@@ -42,9 +42,19 @@ public class PizzaOrder extends HttpServlet {
         req.getSession().setAttribute("selectedPizza", selectedPizza);
         context.setVariable("selectedPizza", selectedPizza);
 
-        String size=req.getParameter("size");
-        req.getSession().setAttribute("size",size);
-        context.setVariable("size",size);
-        this.springTemplateEngine.process("deliveryInfo.html",context,resp.getWriter());
+        if (selectedPizza.equals("Margherita")) {
+
+            resp.sendRedirect("/");
+
+
+        } else {
+
+            String size = req.getParameter("size");
+            req.getSession().setAttribute("size", size);
+            context.setVariable("size", size);
+            this.springTemplateEngine.process("deliveryInfo.html", context, resp.getWriter());
+        }
     }
+
+
 }

@@ -5,25 +5,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * @author Natasha Stojanova
  */
-
 @Entity
+@AllArgsConstructor
 @Setter
 @Getter
-@AllArgsConstructor
-public class Pizza {
+public class Ingredient {
     private String name;
-    private String description;
-    @OneToMany(mappedBy = "pizza")
-    private List<Ingredient> ingredientList;
+    private boolean spicy;
+    private float amount;
+    private boolean vegie;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long pizaaId;
-
-
+    private Long id;
+    @ManyToOne
+    private Pizza pizza;
 
 }

@@ -1,3 +1,4 @@
+/*
 package mk.ukim.finki.natashastojanova.vp.repository;
 
 import mk.ukim.finki.natashastojanova.vp.model.Order;
@@ -6,9 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
- */
+ * @author Natasha Stojanova
+ *//*
+
 @Repository
 public class OrderRepository {
 
@@ -31,3 +34,4 @@ public class OrderRepository {
 
 
 }
+*/

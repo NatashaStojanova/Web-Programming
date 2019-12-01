@@ -2,10 +2,12 @@ package mk.ukim.finki.natashastojanova.vp.web.servlet;
 
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
+import org.apache.catalina.util.SessionConfig;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,4 +41,6 @@ public class ShowPizza extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         this.springTemplateEngine.process("listPizzas.html", context, resp.getWriter());
     }
+
+
 }

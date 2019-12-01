@@ -6,8 +6,9 @@ import mk.ukim.finki.natashastojanova.vp.service.OrderService;
 import org.springframework.stereotype.Service;
 
 /**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ * @author Natasha Stojanova
  */
+
 @Service
 public class OrderServiceImpl implements OrderService {
 

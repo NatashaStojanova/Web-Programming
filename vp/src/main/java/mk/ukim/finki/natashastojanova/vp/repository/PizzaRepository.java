@@ -1,3 +1,4 @@
+/*
 package mk.ukim.finki.natashastojanova.vp.repository;
 
 import lombok.AllArgsConstructor;
@@ -8,9 +9,12 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
- */
+ * @author Natasha Stojanova
+ *//*
+
+
 @Repository
 @AllArgsConstructor
 public class PizzaRepository {
@@ -47,3 +51,4 @@ public class PizzaRepository {
 
 
 }
+*/

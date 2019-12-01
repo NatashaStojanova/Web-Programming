@@ -5,7 +5,7 @@ import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import java.util.List;
 
 /**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ * @author Natasha Stojanova
  */
 public interface PizzaService {
 

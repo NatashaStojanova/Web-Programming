@@ -6,9 +6,11 @@
         body {
             width: 800px;
             margin: auto;
+
         }
         table {
             width:100%;
+
         }
         table, td, th {
             border: 1px solid black;
@@ -29,16 +31,17 @@
 <body>
 <header>
     <h1>Pizza Order page - Select Pizza Size </h1>
+
 </header>
 <section>
     <h2>Choose pizza size:</h2>
     <form method="get" th:action="@{/PizzaOrder.do}">
-        <input type="radio" name="size" value="Small"> Small <br/>
+        <input type="radio" name="size" value="Small" required> Small <br/>
         <input type="radio" name="size" value="Medium"> Medium <br/>
         <input type="radio" name="size" value="Big"> Big <br/>
         <input type="radio" name="size" value="Family"> Family <br/>
         <br/>
-        <button type="submit">Submit</button>
+        <button type="submit">Next</button>
 
     </form>
 
