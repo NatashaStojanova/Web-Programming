@@ -41,6 +41,4 @@ public class ShowPizza extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         this.springTemplateEngine.process("listPizzas.html", context, resp.getWriter());
     }
-
-
 }

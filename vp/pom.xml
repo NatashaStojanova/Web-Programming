@@ -59,15 +59,22 @@
         </dependency>
 
         <!-- Зависност кон база на податоци -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-        </dependency>
+        </dependency>-->
         <!-- Зависност која ќе овозможи прегледување на базата преку веб апликацијата -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.12</version>
+        </dependency>
+
     </dependencies>
 
     <build>

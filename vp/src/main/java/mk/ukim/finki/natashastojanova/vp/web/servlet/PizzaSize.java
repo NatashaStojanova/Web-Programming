@@ -34,12 +34,8 @@ public class PizzaSize extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
         String selectedPizza=req.getParameter("selectedPizza");
 
-
         req.getSession().setAttribute("selectedPizza", selectedPizza);
         context.setVariable("selectedPizza", selectedPizza);
         this.springTemplateEngine.process("selectPizzaSize.html", context, resp.getWriter());
-
-
-
     }
 }

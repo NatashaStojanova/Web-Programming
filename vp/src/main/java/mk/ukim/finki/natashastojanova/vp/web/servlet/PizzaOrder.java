@@ -1,6 +1,5 @@
 package mk.ukim.finki.natashastojanova.vp.web.servlet;
 
-import mk.ukim.finki.natashastojanova.vp.repository.PizzaRepository;
 import mk.ukim.finki.natashastojanova.vp.service.OrderService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
 import org.thymeleaf.context.WebContext;

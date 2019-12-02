@@ -1,7 +1,7 @@
 package mk.ukim.finki.natashastojanova.vp.service.implementation;
 
 import mk.ukim.finki.natashastojanova.vp.model.Order;
-import mk.ukim.finki.natashastojanova.vp.repository.OrderRepository;
+import mk.ukim.finki.natashastojanova.vp.repository.IOrderRepository;
 import mk.ukim.finki.natashastojanova.vp.service.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
+    private IOrderRepository orderRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(IOrderRepository orderRepository) {
 
         this.orderRepository = orderRepository;
     }
@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setClientAddress(address);
         newOrder.setClientName(clientName);
         newOrder.setPizzaType(pizzaType);
-        orderRepository.addOrder(newOrder);
+        orderRepository.save(newOrder);
         return newOrder;
     }
 }
