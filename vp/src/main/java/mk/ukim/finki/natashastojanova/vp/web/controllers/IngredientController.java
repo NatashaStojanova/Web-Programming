@@ -10,7 +10,13 @@ import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaIngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.context.WebContext;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,9 +49,10 @@ public class IngredientController {
                 .filter(Ingredient::isSpicy)
                 .collect(Collectors.toList()).size() >= 4) {
             throw new NoMoreSpicyIngredientsException();
-        } else {
-            ingredientService.save(ingredient);
         }
+
+        ingredientService.save(ingredient);
+
     }
 
     @PatchMapping("/{id}")
@@ -99,4 +106,18 @@ public class IngredientController {
                 .stream()
                 .filter(ing -> ing.getIngredient().getId().equals(id)).map(PizzaIngredient::getPizza).collect(Collectors.toList());
     }
+
+    @GetMapping("/addIngredient")
+    public ModelAndView addIngredient(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        HttpSession session = context.getSession();
+
+        ModelAndView modelAndView = new ModelAndView("add-ingredient");
+        modelAndView.addObject("ingredient", new Ingredient());
+        //modelAndView.addObject("bodyContent", "add-ingredient");
+        return modelAndView;
+    }
 }
+
