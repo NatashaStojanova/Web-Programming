@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Pizza</title>
+</head>
+<body>
+<form id="form" method="post" action="#" th:action="@{/pizzas/} + ${id}" th:object="${pizza}">
+    <h3>Delete Pizza</h3>
+    <input type="hidden" name="pizzaID" value="${pizza.id}">
+    <input type="hidden" name="_method" value="DELETE">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" th:value="${pizza.name}">
+    <label for="description">Description</label>
+    <input type="text" id="description" th:field="*{description}" th:value="${pizza.description}"><br><br>
+    <label for="veggie">Is veggie?</label>
+    <input type="checkbox" id="veggie" th:field="*{veggie}" th:value="${pizza.veggie}"><br><br>
+    <button type="submit">Delete Pizza</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Pizza</title>
+</head>
+<body>
+<form id="form" method="post" action="#" th:action="@{/pizzas/} + ${id}" th:object="${pizza}">
+    <h3>Edit Pizza</h3>
+    <input type="hidden" name="_method" value="PATCH"/>
+    <input type="hidden" name="pizzaID" th.value="${pizza.id}">
+    <label for="name">Name:</label>
+    <input id="name" type="text" th:field="*{name}" th:value="${pizza.name}"><br><br>
+    <label for="description">Description:</label>
+    <input id="description" type="text" th:field="*{description}" th:value="${pizza.description}"><br><br>
+    <label for="veggie">Is Veggie?</label>
+    <input id="veggie" th:field="*{veggie}" th:value="${pizza.veggie}"><br><br>
+    <button type="submit">Edit Pizza</button>
+
+
+</form>
+
+</body>
+</html>

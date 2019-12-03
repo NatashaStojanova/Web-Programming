@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add pizza</title>
+</head>
+<body>
+<form id="form" method="post" action="#" th:action="@{/pizzas}" th:object="${pizza}">
+    <h3>Add pizza</h3>
+    <label for="name">Name</label>
+    <input id="name" th:field="*{name}" type="text"/><br>
+    <label for="description">Description</label>
+    <input id="description" th:field="*{description}" type="text"/>
+    <label for="veggie">Veggie?</label>
+    <input id="veggie" th:field="*{veggie}" type="checkbox"><br><br>
+    <hr>
+    <button type="submit">Add Pizza</button>
+</form>
+
+
+</body>
+</html>

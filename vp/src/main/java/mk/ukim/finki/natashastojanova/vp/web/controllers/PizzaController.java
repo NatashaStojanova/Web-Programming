@@ -9,8 +9,16 @@ import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredient;
 import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaIngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.context.WebContext;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +47,8 @@ public class PizzaController {
                     throw new PizzaNotVeggieException();
             });
         }
-        pizzaService.findAll().forEach(pizza1 -> {
-            if (pizza.getName().equals(pizza.getName()))
+        pizzaService.findAll().stream().forEach(pizza1 -> {
+            if (pizza1.getName().equals(pizza.getName()))
                 throw new PizzaAlreadyExistsException();
         });
 
@@ -113,5 +121,54 @@ public class PizzaController {
         } else {
             throw new PizzaNotFoundException();
         }
+    }
+
+    @GetMapping("/addPizza")
+    public ModelAndView addPizza(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        HttpSession session = context.getSession();
+
+        ModelAndView modelAndView = new ModelAndView("add-pizza");
+        modelAndView.addObject("pizza", new Pizza());
+        return modelAndView;
+    }
+
+    @GetMapping("/editPizza/{id}")
+    public ModelAndView editPizza(HttpServletRequest req, HttpServletResponse resp,
+                                  @PathVariable(name = "id") Long pizzaID) throws UnsupportedEncodingException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        HttpSession session = context.getSession();
+        Pizza pizza = null;
+        if (pizzaService.findById(pizzaID).isPresent()) {
+            pizza = pizzaService.findById(pizzaID).get();
+        } else
+            throw new PizzaNotFoundException();
+
+        ModelAndView modelAndView = new ModelAndView("edit-pizza");
+        modelAndView.addObject("pizza", pizza);
+        return modelAndView;
+    }
+
+    @GetMapping("/deletePizza/{id}")
+    public ModelAndView deletePizza(HttpServletRequest req, HttpServletResponse resp,
+                                    @PathVariable(name = "id") Long pizzaID) throws UnsupportedEncodingException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        HttpSession session = context.getSession();
+
+        Pizza pizza = null;
+        if (pizzaService.findById(pizzaID).isPresent()) {
+            pizza = pizzaService.findById(pizzaID).get();
+        } else
+            throw new PizzaNotFoundException();
+
+        ModelAndView modelAndView = new ModelAndView("delete-pizza");
+        modelAndView.addObject("pizza", pizza);
+        return modelAndView;
     }
 }

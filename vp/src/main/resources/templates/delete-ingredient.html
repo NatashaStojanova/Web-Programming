@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Ingredient</title>
+</head>
+<body>
+<form id="form" action="#" th:action="@{/ingredients/} + ${ingredient.id}" th:object="${ingredient}" method="post">
+    <h2>Edit Ingredient</h2>
+    <input type="hidden" name="ingredientID" th:value="${ingredient.id}">
+    <input type="hidden" name="_method" value="DELETE"/>
+    <label for="name">Name</label>
+    <input id="name" th:field="*{name}" th:value="${ingredient.name}" type="text"><br><br>
+    <label for="spicy">Spicy?</label>
+    <input id="spicy" th:field="*{spicy}" th:checked="${ingredient.spicy}" type="checkbox">
+    <label for="vegie">Veggie?</label>
+    <input id="vegie" th:field="*{vegie}" th:checked="${ingredient.vegie}" type="checkbox"><br><br>
+    <hr>
+    <button type="submit">Delete</button>
+</form>
+</body>
+</html>

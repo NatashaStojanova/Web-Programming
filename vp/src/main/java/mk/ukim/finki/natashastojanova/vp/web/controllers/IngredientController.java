@@ -9,6 +9,7 @@ import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredient;
 import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaIngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.context.WebContext;
@@ -60,6 +61,8 @@ public class IngredientController {
         //edit Ingredient
         ingredient.setId(id);
         if (ingredientService.findById(id).isPresent()) {
+            if (ingredientService.findAll().stream().filter(Ingredient::isSpicy).map(Ingredient::getId).count() >= 4)
+                throw new NoMoreSpicyIngredientsException();
             ingredientService.save(ingredient);
         } else {
             throw new IngredientNotFoundException();
@@ -68,10 +71,10 @@ public class IngredientController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteIngredient(@PathVariable Long id) {
+    public void deleteIngredient(@ModelAttribute Ingredient ingredient, @PathVariable Long id) {
         //delete Ingredient
         if (ingredientService.findById(id).isPresent()) {
-            Ingredient ingredient = ingredientService.findById(id).get();
+            ingredient = ingredientService.findById(id).get();
             ingredientService.delete(ingredient);
         }
         throw new IngredientNotFoundException();
@@ -117,6 +120,43 @@ public class IngredientController {
         ModelAndView modelAndView = new ModelAndView("add-ingredient");
         modelAndView.addObject("ingredient", new Ingredient());
         //modelAndView.addObject("bodyContent", "add-ingredient");
+        return modelAndView;
+    }
+
+    @GetMapping("/editIngredient/{id}")
+    public ModelAndView editIngredient(HttpServletRequest req, HttpServletResponse resp, @PathVariable(name = "id") Long ingredientID) throws IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        HttpSession session = context.getSession();
+
+        Ingredient ingredient = null;
+
+        if (ingredientService.findById(ingredientID).isPresent())
+            ingredient = ingredientService.findById(ingredientID).get();
+        else
+            throw new IngredientNotFoundException();
+
+        ModelAndView modelAndView = new ModelAndView("edit-ingredient");
+        modelAndView.addObject("ingredient", ingredient);
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteIngredient/{id}")
+    public ModelAndView deleteIngredient(HttpServletRequest req, HttpServletResponse resp, @PathVariable(name = "id") Long ingredientID) throws IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        HttpSession session = context.getSession();
+
+        Ingredient ingredient = null;
+        if (ingredientService.findById(ingredientID).isPresent()) {
+            ingredient = ingredientService.findById(ingredientID).get();
+        } else {
+            throw new IngredientNotFoundException();
+        }
+        ModelAndView modelAndView = new ModelAndView("delete-ingredient");
+        modelAndView.addObject("ingredient", ingredient);
         return modelAndView;
     }
 }
