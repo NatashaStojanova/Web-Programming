@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List Pizzas</title>
+</head>
+<body>
+<tr th:each="pizza : ${pizzas}">
+    <td>
+        <span th:text="${pizza.id}"></span>
+    </td>
+    <td>
+        <span th:text="${pizza.name}"></span>
+    </td>
+    <td>
+        <span th:text="${pizza.description}"></span><br><br>
+    </td>
+</tr>
+</body>
+</html>

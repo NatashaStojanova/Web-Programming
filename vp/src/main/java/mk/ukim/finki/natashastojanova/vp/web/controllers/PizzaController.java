@@ -78,7 +78,7 @@ public class PizzaController {
     }
 
     @GetMapping
-    public List<Pizza> getAllPizzas(@RequestParam(name = "totalIngredients", required = false, defaultValue = "0") Long totalIngredients) {
+    public ModelAndView getAllPizzas(@RequestParam(name = "totalIngredients", required = false, defaultValue = "0") Long totalIngredients) {
         List<Pizza> finalList = new ArrayList<>();
         if (totalIngredients > 0) {
             pizzaService.findAll().forEach(pizza1 -> {
@@ -88,9 +88,13 @@ public class PizzaController {
 
             });
 
-            return finalList;
+            ModelAndView modelAndView = new ModelAndView("list-pizzas");
+            modelAndView.addObject("pizzas", finalList);
+            return modelAndView;
         } else {
-            return pizzaService.findAll();
+            ModelAndView modelAndView = new ModelAndView("list-pizzas");
+            modelAndView.addObject("pizzas", pizzaService.findAll());
+            return modelAndView;
         }
     }
 
