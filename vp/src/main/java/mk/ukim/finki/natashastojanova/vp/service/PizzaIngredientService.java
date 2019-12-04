@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface PizzaIngredientService {
 
     public List<PizzaIngredient> findAll();
+
+    public void save(PizzaIngredient pizzaIngredient);
 }

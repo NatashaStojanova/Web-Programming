@@ -24,4 +24,9 @@ public class PizzaIngredientImpl implements PizzaIngredientService {
     public List<PizzaIngredient> findAll() {
         return pizzaIngredientRepository.findAll();
     }
+
+    @Override
+    public void save(PizzaIngredient pizzaIngredient) {
+        pizzaIngredientRepository.save(pizzaIngredient);
+    }
 }

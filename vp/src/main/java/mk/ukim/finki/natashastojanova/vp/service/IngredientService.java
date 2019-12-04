@@ -16,4 +16,5 @@ public interface IngredientService {
     public Optional<Ingredient> findById(Long id);
 
     public List<Ingredient> findAll();
+
 }

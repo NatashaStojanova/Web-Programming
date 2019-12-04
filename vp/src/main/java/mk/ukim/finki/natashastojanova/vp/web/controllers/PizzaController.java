@@ -1,11 +1,13 @@
 package mk.ukim.finki.natashastojanova.vp.web.controllers;
 
+import mk.ukim.finki.natashastojanova.vp.exceptions.IngredientNotFoundException;
 import mk.ukim.finki.natashastojanova.vp.exceptions.PizzaAlreadyExistsException;
 import mk.ukim.finki.natashastojanova.vp.exceptions.PizzaNotFoundException;
 import mk.ukim.finki.natashastojanova.vp.exceptions.PizzaNotVeggieException;
 import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredient;
+import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredientCompositeKey;
 import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaIngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
@@ -38,24 +40,54 @@ public class PizzaController {
         this.pizzaIngredientService = pizzaIngredientService;
     }
 
+
     @PostMapping
-    public void addPizza(@ModelAttribute Pizza pizza) {
-        //save pizza
-        if (pizza.getVeggie()) {
-            pizza.getIngredientList().forEach(ing -> {
-                if (!ing.getIngredient().isVegie())
-                    throw new PizzaNotVeggieException();
-            });
-        }
-        pizzaService.findAll().stream().forEach(pizza1 -> {
-            if (pizza1.getName().equals(pizza.getName()))
+    public ModelAndView addPizza(@ModelAttribute(name = "pizza") Pizza newPizza, @RequestParam(name = "newIngredients") ArrayList<Long> newIngredients) {
+        //add new pizza
+        pizzaService.findAll().forEach(pizza1 -> {
+            if (pizza1.getName().equals(newPizza.getName()))
                 throw new PizzaAlreadyExistsException();
         });
 
+        if (newPizza.getVeggie()) {
+            List<Ingredient> ings = new ArrayList<>();
+            newIngredients.forEach(ingID -> {
+                if (ingredientService.findById(ingID).isPresent()) {
+                    Ingredient ingredient = ingredientService.findById(ingID).get();
+                    ings.add(ingredient);
+                } else
+                    throw new IngredientNotFoundException();
+            });
+            //sega vo ings imam lista od ingredients i treba da proveram dali se veggie
+            ings.forEach(ing -> {
+                if (!ing.isVegie()) {
+                    throw new PizzaNotVeggieException();
+                }
+            });
+        }
+
+        pizzaService.save(newPizza);
+        Pizza pizza = pizzaService.findByName(newPizza.getName());
+        List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+        //for each id in newIngredients(which is List), check if the id is present,does it exist in db
+        newIngredients.forEach(ingID -> {
+            if (ingredientService.findById(ingID).isPresent()) {
+                PizzaIngredient pizzaIngredient = new PizzaIngredient();
+                pizzaIngredient.setPizza(pizza);
+                pizzaIngredient.setIngredient(ingredientService.findById(ingID).get());
+                PizzaIngredientCompositeKey compositeKey = new PizzaIngredientCompositeKey();
+                compositeKey.setPizzaId(pizza.getId());
+                compositeKey.setIngredientid(ingID);
+                pizzaIngredient.setId(compositeKey);
+                pizzaIngredients.add(pizzaIngredient);
+                pizzaIngredientService.save(pizzaIngredient);
+            } else
+                throw new IngredientNotFoundException();
+        });
+        pizza.setIngredientList(pizzaIngredients);
         pizzaService.save(pizza);
-
+        return new ModelAndView("redirect:/pizzas");
     }
-
     @PatchMapping("/{id}")
     public void editPizza(@ModelAttribute Pizza pizza, @PathVariable Long id) {
         pizza.setId(id);
@@ -128,7 +160,7 @@ public class PizzaController {
     }
 
     @GetMapping("/addPizza")
-    public ModelAndView addPizza(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public ModelAndView addPizza(@ModelAttribute Pizza pizza, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -136,6 +168,8 @@ public class PizzaController {
 
         ModelAndView modelAndView = new ModelAndView("add-pizza");
         modelAndView.addObject("pizza", new Pizza());
+        modelAndView.addObject("ingredients", ingredientService.findAll());
+        modelAndView.addObject("newIngredients", new ArrayList<Long>());
         return modelAndView;
     }
 

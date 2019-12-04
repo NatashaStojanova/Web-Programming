@@ -1,6 +1,5 @@
 package mk.ukim.finki.natashastojanova.vp.service.implementation;
 
-import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.repository.IPizzaRepository;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
@@ -45,5 +44,11 @@ public class PizzaServiceImpl implements PizzaService {
     public List<Pizza> findAll() {
         return pizzaRepository.findAll();
     }
+
+    @Override
+    public Pizza findByName(String name) {
+        return pizzaRepository.findByName(name).get();
+    }
+
 
 }

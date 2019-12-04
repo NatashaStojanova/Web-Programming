@@ -1,6 +1,5 @@
 package mk.ukim.finki.natashastojanova.vp.service;
 
-import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 
 import java.util.List;
@@ -19,4 +18,6 @@ public interface PizzaService {
     public Optional<Pizza> findById(Long id);
 
     public List<Pizza> findAll();
+
+    public Pizza findByName(String name);
 }

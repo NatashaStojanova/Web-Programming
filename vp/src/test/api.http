@@ -1,0 +1,29 @@
+###
+GET http://localhost:8080/ingredients/1
+Accept: application/json
+
+###
+GET http://localhost:8080/ingredients?spicy=true
+Accept: application/json
+
+###
+GET http://localhost:8080/ingredients/3/pizzas
+Accept: application/json
+
+###
+GET http://localhost:8080/pizzas
+Accept: application/json
+
+###
+GET http://localhost:8080/pizzas/1
+Accept: application/json
+
+###
+GET http://localhost:8080/pizzas?totalIngredients=5
+Accept: application/json
+
+###
+GET http://localhost:8080/pizzas/compare?pizza1=1&pizza2=2
+Accept: application/json
+
+###

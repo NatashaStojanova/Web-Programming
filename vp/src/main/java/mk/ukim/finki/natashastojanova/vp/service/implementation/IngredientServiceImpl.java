@@ -2,7 +2,6 @@ package mk.ukim.finki.natashastojanova.vp.service.implementation;
 
 import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.repository.IIngredientRepository;
-import mk.ukim.finki.natashastojanova.vp.repository.IPizzaIngredientRepository;
 import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
 import org.springframework.stereotype.Service;
 
