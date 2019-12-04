@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List Ingredients</title>
+</head>
+<body>
+
+<tr th:each="ingredient : ${ingredients}">
+    <td>
+        <span th:text="${ingredient.id}"></span>
+    </td>
+    <span th:text="${ingredient.name}"></span>
+    </td>
+    <td>
+        <span th:text="${ingredient.spicy}"></span>
+    </td>
+    <td>
+        <span th:text="${ingredient.vegie}"></span>
+    </td>
+    <br><br>
+</tr>
+
+
+</body>
+</html>

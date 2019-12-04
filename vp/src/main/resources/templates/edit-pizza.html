@@ -14,7 +14,7 @@
     <label for="description">Description:</label>
     <input id="description" type="text" th:field="*{description}" th:value="${pizza.description}"><br><br>
     <label for="veggie">Is Veggie?</label>
-    <input id="veggie" th:field="*{veggie}" th:value="${pizza.veggie}"><br><br>
+    <input id="veggie" type="checkbox" th:field="*{veggie}" th:value="${pizza.veggie}"><br><br>
     <button type="submit">Edit Pizza</button>
 
 

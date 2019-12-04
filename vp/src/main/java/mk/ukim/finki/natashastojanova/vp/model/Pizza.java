@@ -1,5 +1,6 @@
 package mk.ukim.finki.natashastojanova.vp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Pizza {
     private String name;
     private String description;
     private Boolean veggie;
+    @JsonIgnore
     @OneToMany(mappedBy = "pizza")
     private List<PizzaIngredient> ingredientList;
     @Id
