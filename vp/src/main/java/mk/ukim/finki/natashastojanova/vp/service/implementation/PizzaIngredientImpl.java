@@ -1,5 +1,6 @@
 package mk.ukim.finki.natashastojanova.vp.service.implementation;
 
+import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredient;
 import mk.ukim.finki.natashastojanova.vp.repository.IPizzaIngredientRepository;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaIngredientService;
@@ -29,4 +30,10 @@ public class PizzaIngredientImpl implements PizzaIngredientService {
     public void save(PizzaIngredient pizzaIngredient) {
         pizzaIngredientRepository.save(pizzaIngredient);
     }
+
+    @Override
+    public void deleteAllByPizza(Pizza pizza) {
+        pizzaIngredientRepository.deletePizzaIngredientByPizza(pizza);
+    }
+
 }

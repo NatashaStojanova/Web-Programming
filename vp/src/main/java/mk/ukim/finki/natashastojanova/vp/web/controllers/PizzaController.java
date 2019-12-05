@@ -94,13 +94,12 @@ public class PizzaController {
     }
 
     @PatchMapping("/{id}")
-    public ModelAndView editPizza(@ModelAttribute(name = "pizza") Pizza oldPizza, @PathVariable(name = "id") Long id, @RequestParam(name = "newIngredients") ArrayList<Long> newIngredients) {
+    public ModelAndView editPizza(@ModelAttribute(name = "pizza") Pizza pizza, @PathVariable(name = "id") Long id, @RequestParam(name = "newIngredients") ArrayList<Long> newIngredients) {
         //edit new pizza
         if (pizzaService.findById(id).isPresent()) {
-            oldPizza.setId(id);
-            pizzaService.save(oldPizza);
-            Pizza pizza = pizzaService.findByName(oldPizza.getName());
+            pizza.setId(id);
             List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+            pizzaIngredientService.deleteAllByPizza(pizza);
             newIngredients.forEach(ingID -> {
                 if (ingredientService.findById(ingID).isPresent()) {
                     PizzaIngredient pizzaIngredient = new PizzaIngredient();

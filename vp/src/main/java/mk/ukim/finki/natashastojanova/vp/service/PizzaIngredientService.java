@@ -15,4 +15,6 @@ public interface PizzaIngredientService {
     public List<PizzaIngredient> findAll();
 
     public void save(PizzaIngredient pizzaIngredient);
+
+    public void deleteAllByPizza(Pizza pizza);
 }
