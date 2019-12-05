@@ -15,7 +15,34 @@
     <input id="description" type="text" th:field="*{description}" th:value="${pizza.description}"><br><br>
     <label for="veggie">Is Veggie?</label>
     <input id="veggie" type="checkbox" th:field="*{veggie}" th:value="${pizza.veggie}"><br><br>
+    <hr>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Is Spicy?</th>
+            <th>Is Veggie?</th>
+            <!--<th>Amout</th>-->
+        </tr>
+        <tr th:each="ingredient : ${ingredients}">
+            <td>
+                <input name="newIngredients" type="checkbox" th:value="${ingredient.id}"/>
+                <span th:text="${ingredient.name}"></span>
+            </td>
+            <td>
+                <span th:text="${ingredient.spicy}"></span>
+            </td>
+            <td>
+                <span th:text="${ingredient.vegie}"></span>
+
+            </td>
+            <!-- <td>
+                 <input type="text" name="amount"/>
+             </td>-->
+        </tr>
+
+    </table>
     <button type="submit">Edit Pizza</button>
+</form>
 
 
 </form>

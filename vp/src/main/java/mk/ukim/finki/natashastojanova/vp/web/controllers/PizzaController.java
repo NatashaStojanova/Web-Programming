@@ -92,14 +92,38 @@ public class PizzaController {
         pizzaService.save(pizza);
         return new ModelAndView("redirect:/pizzas");
     }
+
     @PatchMapping("/{id}")
-    public void editPizza(@ModelAttribute Pizza pizza, @PathVariable Long id) {
-        pizza.setId(id);
+    public ModelAndView editPizza(@ModelAttribute(name = "pizza") Pizza oldPizza, @PathVariable(name = "id") Long id, @RequestParam(name = "newIngredients") ArrayList<Long> newIngredients) {
+        //edit new pizza
         if (pizzaService.findById(id).isPresent()) {
+            oldPizza.setId(id);
+            pizzaService.save(oldPizza);
+            Pizza pizza = pizzaService.findByName(oldPizza.getName());
+            List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+            newIngredients.forEach(ingID -> {
+                if (ingredientService.findById(ingID).isPresent()) {
+                    PizzaIngredient pizzaIngredient = new PizzaIngredient();
+                    pizzaIngredient.setPizza(pizza);
+                    pizzaIngredient.setIngredient(ingredientService.findById(ingID).get());
+                    PizzaIngredientCompositeKey compositeKey = new PizzaIngredientCompositeKey();
+                    compositeKey.setPizzaId(pizza.getId());
+                    compositeKey.setIngredientid(ingID);
+                    pizzaIngredient.setId(compositeKey);
+                    pizzaIngredients.add(pizzaIngredient);
+                    pizzaIngredientService.save(pizzaIngredient);
+
+                } else {
+                    throw new IngredientNotFoundException();
+
+                }
+            });
+            pizza.setIngredientList(pizzaIngredients);
             pizzaService.save(pizza);
-        } else {
+            return new ModelAndView("redirect:/pizzas");
+        } else
             throw new PizzaNotFoundException();
-        }
+
     }
 
     @DeleteMapping("/{id}")
@@ -180,12 +204,9 @@ public class PizzaController {
     }
 
     @GetMapping("/editPizza/{id}")
-    public ModelAndView editPizza(HttpServletRequest req, HttpServletResponse resp,
-                                  @PathVariable(name = "id") Long pizzaID) throws UnsupportedEncodingException {
-        /*resp.setContentType("text/html; charset=UTF-8");
-        req.setCharacterEncoding("UTF-8");
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();*/
+    public ModelAndView editPizza(@PathVariable(name = "id") Long pizzaID) throws UnsupportedEncodingException {
+
+
         Pizza pizza = null;
         if (pizzaService.findById(pizzaID).isPresent()) {
             pizza = pizzaService.findById(pizzaID).get();
@@ -194,6 +215,8 @@ public class PizzaController {
 
         ModelAndView modelAndView = new ModelAndView("edit-pizza");
         modelAndView.addObject("pizza", pizza);
+        modelAndView.addObject("ingredients", ingredientService.findAll());
+        modelAndView.addObject("newIngredients", new ArrayList<>());
         return modelAndView;
     }
 
