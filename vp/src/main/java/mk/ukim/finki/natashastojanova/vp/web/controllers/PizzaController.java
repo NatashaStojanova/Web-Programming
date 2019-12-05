@@ -130,6 +130,7 @@ public class PizzaController {
 
         if (pizzaService.findById(id).isPresent()) {
             Pizza pizza = pizzaService.findById(id).get();
+            pizzaIngredientService.deleteAllByPizza(pizza);
             pizzaService.delete(pizza);
         } else {
             throw new PizzaNotFoundException();
