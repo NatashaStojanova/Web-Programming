@@ -115,10 +115,10 @@ public class IngredientController {
 
     @GetMapping("/{id}/pizzas")
     public ModelAndView getAllPizzasWithId(HttpServletRequest req, HttpServletResponse resp, @PathVariable(name = "id") Long id) throws UnsupportedEncodingException {
-        resp.setContentType("text/html; charset=UTF-8");
+        /*resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();
+        HttpSession session = context.getSession();*/
 
         if (ingredientService.findById(id).isPresent()) {
             List<Pizza> pizzas = pizzaIngredientService.findAll().stream()
@@ -134,10 +134,10 @@ public class IngredientController {
 
     @GetMapping("/addIngredient")
     public ModelAndView addIngredient(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html; charset=UTF-8");
+        /*resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();
+        HttpSession session = context.getSession();*/
 
         ModelAndView modelAndView = new ModelAndView("add-ingredient");
         modelAndView.addObject("ingredient", new Ingredient());
@@ -147,10 +147,10 @@ public class IngredientController {
 
     @GetMapping("/editIngredient/{id}")
     public ModelAndView editIngredient(HttpServletRequest req, HttpServletResponse resp, @PathVariable(name = "id") Long ingredientID) throws IOException {
-        resp.setContentType("text/html; charset=UTF-8");
+        /*resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();
+        HttpSession session = context.getSession();*/
 
         Ingredient ingredient = null;
 
@@ -166,10 +166,10 @@ public class IngredientController {
 
     @GetMapping("/deleteIngredient/{id}")
     public ModelAndView deleteIngredient(HttpServletRequest req, HttpServletResponse resp, @PathVariable(name = "id") Long ingredientID) throws IOException {
-        resp.setContentType("text/html; charset=UTF-8");
+        /*resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();
+        HttpSession session = context.getSession();*/
 
         Ingredient ingredient = null;
         if (ingredientService.findById(ingredientID).isPresent()) {

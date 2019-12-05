@@ -20,6 +20,7 @@
             <th>Name</th>
             <th>Is Spicy?</th>
             <th>Is Veggie?</th>
+            <th>Amout</th>
         </tr>
         <tr th:each="ingredient : ${ingredients}">
             <td>
@@ -32,6 +33,9 @@
             <td>
                 <span th:text="${ingredient.vegie}"></span>
 
+            </td>
+            <td>
+                <input type="text" name="amount"/>
             </td>
         </tr>
 

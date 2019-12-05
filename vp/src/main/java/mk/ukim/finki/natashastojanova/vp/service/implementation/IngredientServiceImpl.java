@@ -1,8 +1,11 @@
 package mk.ukim.finki.natashastojanova.vp.service.implementation;
 
 import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
+import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.repository.IIngredientRepository;
 import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +41,11 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public List<Ingredient> findAll() {
         return ingredientRepository.findAll();
+    }
+
+    @Override
+    public Page<Ingredient> findPaginated(Pageable pageable) {
+        return ingredientRepository.findAll(pageable);
     }
 
 }

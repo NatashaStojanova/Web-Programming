@@ -11,6 +11,10 @@ import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredientCompositeKey;
 import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaIngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -110,7 +114,7 @@ public class PizzaController {
     }
 
     @GetMapping
-    public ModelAndView getAllPizzas(@RequestParam(name = "totalIngredients", required = false, defaultValue = "0") Long totalIngredients) {
+    public Page<Pizza> getAllPizzas(@RequestParam(name = "totalIngredients", required = false, defaultValue = "0") Long totalIngredients, @PageableDefault(value = 5) Pageable pageable) {
         List<Pizza> finalList = new ArrayList<>();
         if (totalIngredients > 0) {
             pizzaService.findAll().forEach(pizza1 -> {
@@ -120,13 +124,15 @@ public class PizzaController {
 
             });
 
-            ModelAndView modelAndView = new ModelAndView("list-pizzas");
+            /*ModelAndView modelAndView = new ModelAndView("list-pizzas");
             modelAndView.addObject("pizzas", finalList);
-            return modelAndView;
+            return modelAndView;*/
+            return new PageImpl<>(finalList);
         } else {
-            ModelAndView modelAndView = new ModelAndView("list-pizzas");
+            /*ModelAndView modelAndView = new ModelAndView("list-pizzas");
             modelAndView.addObject("pizzas", pizzaService.findAll());
-            return modelAndView;
+            return modelAndView;*/
+            return pizzaService.findPaginated(pageable);
         }
     }
 
@@ -161,10 +167,10 @@ public class PizzaController {
 
     @GetMapping("/addPizza")
     public ModelAndView addPizza(@ModelAttribute Pizza pizza, HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html; charset=UTF-8");
+        /*resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();
+        HttpSession session = context.getSession();*/
 
         ModelAndView modelAndView = new ModelAndView("add-pizza");
         modelAndView.addObject("pizza", new Pizza());
@@ -176,10 +182,10 @@ public class PizzaController {
     @GetMapping("/editPizza/{id}")
     public ModelAndView editPizza(HttpServletRequest req, HttpServletResponse resp,
                                   @PathVariable(name = "id") Long pizzaID) throws UnsupportedEncodingException {
-        resp.setContentType("text/html; charset=UTF-8");
+        /*resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();
+        HttpSession session = context.getSession();*/
         Pizza pizza = null;
         if (pizzaService.findById(pizzaID).isPresent()) {
             pizza = pizzaService.findById(pizzaID).get();
@@ -194,10 +200,10 @@ public class PizzaController {
     @GetMapping("/deletePizza/{id}")
     public ModelAndView deletePizza(HttpServletRequest req, HttpServletResponse resp,
                                     @PathVariable(name = "id") Long pizzaID) throws UnsupportedEncodingException {
-        resp.setContentType("text/html; charset=UTF-8");
+       /* resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();
+        HttpSession session = context.getSession();*/
 
         Pizza pizza = null;
         if (pizzaService.findById(pizzaID).isPresent()) {

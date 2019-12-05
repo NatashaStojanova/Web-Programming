@@ -3,6 +3,8 @@ package mk.ukim.finki.natashastojanova.vp.service.implementation;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.repository.IPizzaRepository;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +52,9 @@ public class PizzaServiceImpl implements PizzaService {
         return pizzaRepository.findByName(name).get();
     }
 
+    @Override
+    public Page<Pizza> findPaginated(Pageable pageable) {
+        return pizzaRepository.findAll(pageable);
+    }
 
 }
