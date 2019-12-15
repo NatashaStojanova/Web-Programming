@@ -44,4 +44,6 @@ public class Ingredient implements Comparable<Ingredient> {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+
 }

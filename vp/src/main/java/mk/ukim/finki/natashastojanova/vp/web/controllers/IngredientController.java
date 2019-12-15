@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @author Natasha Stojanova
  */
 @RestController
-@RequestMapping("/ingredients")
+@RequestMapping(path = "/ingredients", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 @CrossOrigin("*")
 public class IngredientController {
 
@@ -63,17 +63,21 @@ public class IngredientController {
     }
 
     @PatchMapping("/{id}")
-    public void editIngredient(@ModelAttribute Ingredient ingredient, @PathVariable Long id) {
-        //edit Ingredient
-        ingredient.setId(id);
+    public Ingredient editIngredientRest(@PathVariable(name = "id") Long id,
+                                         @RequestParam(value = "name") String name,
+                                         @RequestParam(value = "spicy") boolean spicy,
+                                         @RequestParam(value = "veggie") boolean vegie) {
         if (ingredientService.findById(id).isPresent()) {
-            if (ingredientService.findAll().stream().filter(Ingredient::isSpicy).map(Ingredient::getId).count() >= 4)
+            if (ingredientService.findAll().stream().filter(Ingredient::isSpicy).map(Ingredient::getId).count() == 4)
                 throw new NoMoreSpicyIngredientsException();
-            ingredientService.save(ingredient);
-        } else {
+            Ingredient newIngredient = ingredientService.findById(id).get();
+            newIngredient.setVegie(vegie);
+            newIngredient.setSpicy(spicy);
+            newIngredient.setName(name);
+            ingredientService.save(newIngredient);
+            return newIngredient;
+        } else
             throw new IngredientNotFoundException();
-        }
-
     }
 
     @DeleteMapping("/{id}")

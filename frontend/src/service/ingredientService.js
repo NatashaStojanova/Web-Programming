@@ -11,7 +11,7 @@ const IngredientService = {
                 'page': page, 'page-size': pageSize
             }
         })
-    }
+    },
     /* addConsultationTerm: (term) => {
          const data = {
              ...term,
@@ -25,20 +25,19 @@ const IngredientService = {
              }
          });
      },*/
-    /*updateConsultationTerm : (term) => {
+    updateIngredient: (ingredient) => {
         const data = {
-            ...term,
-            roomName:term.room.name
-        }
-        const slotId= term.slotId;
+            ...ingredient,
+            name: ingredient.name
+        };
+        const id = ingredient.id;
         const formParams = qs.stringify(data);
-        return axios.patch("/api/consultations/"+slotId,formParams, {
+        return axios.patch("/ingredients/" + id, formParams, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'professorId':'kostadin.mishev'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-    }*/
+    }
 }
 
 export default IngredientService;

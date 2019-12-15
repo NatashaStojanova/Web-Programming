@@ -44,6 +44,25 @@ class App extends Component {
         });
     }
 
+    updateIngredient = ((editedIngredient) => {
+        IngredientService.updateIngredient(editedIngredient).then((response) => {
+            const newIngredient = response.data;
+            //update state
+            this.setState((prevState) => {
+                const newIngRef = prevState.ingredients.filter((item) => {
+                    if (item.id === newIngredient.id) {
+                        return newIngredient;
+                    }
+                    return item;
+                });
+                return {
+                    "ingredients": newIngRef
+                }
+            });
+        });
+    });
+
+
     render() {
         return (
             <div className="App">
@@ -63,7 +82,7 @@ class App extends Component {
                                 <AddIngredient/>}>
                             </Route>
                             <Route path="/ingredients/:id/edit" exact render={() =>
-                                <EditIngredient/>}>
+                                <EditIngredient onSubmit={this.updateIngredient}/>}>
                             </Route>
                             <Redirect to={"/"}/>
                         </div>
