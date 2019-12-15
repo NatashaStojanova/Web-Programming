@@ -57,4 +57,10 @@ public class PizzaServiceImpl implements PizzaService {
         return pizzaRepository.findAll(pageable);
     }
 
+    /*@Override
+    public List<Pizza> findSpicyPizzas() {
+        return pizzaRepository.findAllByIngredientListContainsIngredientAndSpicy();
+    }*/
+
+
 }

@@ -24,4 +24,6 @@ public interface PizzaService {
     public Pizza findByName(String name);
 
     public Page<Pizza> findPaginated(Pageable pageable);
+
+    /*public List<Pizza> findSpicyPizzas();*/
 }

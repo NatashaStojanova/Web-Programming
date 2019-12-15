@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Natasha Stojanova
@@ -239,4 +240,21 @@ public class PizzaController {
         modelAndView.addObject("pizza", pizza);
         return modelAndView;
     }
+
+    @GetMapping("/allPizzasSpicy")
+    public List<Pizza> spicyPizzas() {
+        List<Pizza> finalList = new ArrayList<>();
+        for (Pizza pizza : pizzaService.findAll()) {
+            for (PizzaIngredient ing : pizza.getIngredientList()) {
+                if (ing.getIngredient().isSpicy()) {
+                    finalList.add(pizza);
+                    break;
+                }
+            }
+        }
+        return finalList;
+
+        /*return pizzaService.findSpicyPizzas();*/
+    }
+
 }
