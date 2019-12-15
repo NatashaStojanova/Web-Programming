@@ -9,7 +9,10 @@ import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredient;
 import mk.ukim.finki.natashastojanova.vp.service.IngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaIngredientService;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.ui.Model;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.context.WebContext;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/ingredients")
+@CrossOrigin("*")
 public class IngredientController {
 
     private IngredientService ingredientService;
@@ -82,7 +86,7 @@ public class IngredientController {
         throw new IngredientNotFoundException();
     }
 
-    @GetMapping
+    /*@GetMapping
     public ModelAndView getIngredient(HttpServletRequest req, HttpServletResponse resp, @RequestParam(name = "spicy", required = false) boolean spicy) throws UnsupportedEncodingException {
 
         resp.setContentType("text/html; charset=UTF-8");
@@ -102,6 +106,20 @@ public class IngredientController {
         modelAndView.addObject("ingredients", ingredientService.findAll().stream().filter(Ingredient::isSpicy).collect(Collectors.toList()));
         return modelAndView;
 
+    }*/
+
+    @GetMapping
+    public Page<Ingredient> getIngredient(@RequestParam(name = "spicy", required = false) boolean spicy) {
+        List<Ingredient> allIngredients = ingredientService.findAll();
+        if (!spicy) {
+            Collections.sort(allIngredients);
+            return new PageImpl<>(allIngredients);
+        } else {
+            List<Ingredient> spicyIngredients = allIngredients.stream()
+                    .filter(Ingredient::isSpicy)
+                    .collect(Collectors.toList());
+            return new PageImpl<>(spicyIngredients);
+        }
     }
 
     @GetMapping("/{id}")

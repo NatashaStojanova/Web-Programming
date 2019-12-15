@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/pizzas")
+@CrossOrigin("*")
 public class PizzaController {
     private IngredientService ingredientService;
     private PizzaService pizzaService;
