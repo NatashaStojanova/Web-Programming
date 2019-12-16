@@ -62,6 +62,31 @@ class App extends Component {
         });
     });
 
+    deleteIngredient = ((id) => {
+        IngredientService.deleteIngredient(id).then();
+        this.setState((prevState) => {
+            const newIngredients = prevState.ingredients.filter((ingredient, index) => {
+                return ingredient.id !== id;
+            });
+            return {"ingredients": newIngredients}
+        })
+    });
+
+    addNewIngredient = ((newIngredient) => {
+        IngredientService.addIngredient(newIngredient).then(resp => {
+            const newIngr = resp.data;
+            this.setState((prevState) => {
+                const newIngredients = prevState.ingredients.map((item) => {
+                    return item;
+                });
+                newIngredients.push(newIngr);
+                return {
+                    "ingredients": newIngredients
+                }
+            });
+        });
+    });
+
 
     render() {
         return (
@@ -75,15 +100,17 @@ class App extends Component {
                             </Route>
                             <Route path={"/pizzas"} exact render={() => <Pizzas pizzas={this.state.pizzas}/>}>
                             </Route>
-                            <Route path="/ingredients" exact render={() =>
-                                <Ingredients ingredients={this.state.ingredients}/>}>
-                            </Route>
-                            <Route path="/ingredients/new" exact render={() =>
-                                <AddIngredient/>}>
+                            <Route path="/ingredients" exact
+                                   render={() => <Ingredients ingredients={this.state.ingredients}
+                                                              onDelete={this.deleteIngredient}/>}>
                             </Route>
                             <Route path="/ingredients/:id/edit" exact render={() =>
                                 <EditIngredient onSubmit={this.updateIngredient}/>}>
                             </Route>
+                            <Route path="/ingredients/new" exact
+                                   render={() => <AddIngredient onSubmit={this.addNewIngredient}/>}>
+                            </Route>
+
                             <Redirect to={"/"}/>
                         </div>
                     </main>

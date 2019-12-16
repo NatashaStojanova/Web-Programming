@@ -22,18 +22,20 @@ class Ingredient extends Component {
                         <span className="fa fa-edit"/>
                         <span><strong>Edit</strong></span>
                     </Link>
-                    <button className="btn btn-sm btn-outline-secondary ">
+                    <Link to={"/ingredients"} onClick={() => {
+                        this.props.onDelete(this.props.ingredient.id)
+                    }} className="btn btn-sm btn-outline-secondary ">
                         <span className="fa fa-remove"/>
-                        <span><strong>Remove</strong></span>
-                    </button>
-                    <button className="btn btn-sm btn-outline-dark">
+                        <span><strong>Delete</strong></span>
+                    </Link>
+                    <Link to={"/ingredients/" + this.props.ingredient.id + "/details"}
+                          className="btn btn-sm btn-outline-dark">
                         <span><strong>Details</strong></span>
-                    </button>
+                    </Link>
                 </td>
             </tr>
-        );
+        )
     }
 }
-
 
 export default Ingredient;

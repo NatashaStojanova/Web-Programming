@@ -11,7 +11,13 @@ const PizzaService = {
                 'page': page, 'page-size': pageSize
             }
         })
+    },
+
+    fetchPizzaIngredients: () => {
+        return axios.get("/pizzas/:id/ingredients");
     }
+
+
     /* addConsultationTerm: (term) => {
          const data = {
              ...term,

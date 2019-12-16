@@ -173,6 +173,22 @@ public class PizzaController {
         }
     }
 
+    //za dadena pizza->vrati mi gi nejzinite ingredients
+    @GetMapping("/{id}/ingredients")
+    public List<Ingredient> getIngredients(@PathVariable Long id) {
+        List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+        if (pizzaService.findById(id).isPresent()) {
+            Pizza p = pizzaService.findById(id).get();
+            List<Ingredient> ingredients = new ArrayList<>();
+            p.getIngredientList().forEach(pizzaIngredient -> {
+                ingredients.add(pizzaIngredient.getIngredient());
+            });
+            return ingredients;
+        } else {
+            throw new PizzaNotFoundException();
+        }
+    }
+
     @GetMapping("/compare")
     public List<Ingredient> getMutualIngredients(@RequestParam(name = "pizza1") Long id1, @RequestParam(name = "pizza2") Long id2) {
         List<Ingredient> pizzaIngredients = new ArrayList<>();

@@ -45,7 +45,7 @@ public class IngredientController {
         this.pizzaService = pizzaService;
     }
 
-    @PostMapping
+    /*@PostMapping
     public void addIngredient(@ModelAttribute Ingredient ingredient) {
         //add new ingredient
         ingredientService.findAll().stream().forEach(ingredient1 -> {
@@ -60,13 +60,32 @@ public class IngredientController {
 
         ingredientService.save(ingredient);
 
+    }*/
+
+    @PostMapping
+    public Ingredient addIngredient(@RequestParam(value = "name") String name,
+                                    @RequestParam(value = "spicy") boolean spicy,
+                                    @RequestParam(value = "vegie") boolean vegie) {
+        ingredientService.findAll().forEach(ing -> {
+            if (ing.getName().equals(name))
+                throw new IngredientAlreadyExistsException();
+        });
+        if (ingredientService.findAll().stream().filter(Ingredient::isSpicy).map(Ingredient::getId).count() == 4)
+            throw new NoMoreSpicyIngredientsException();
+        Ingredient newIngredient = new Ingredient();
+        newIngredient.setName(name);
+        newIngredient.setSpicy(spicy);
+        newIngredient.setVegie(vegie);
+        ingredientService.save(newIngredient);
+        return newIngredient;
     }
+
 
     @PatchMapping("/{id}")
     public Ingredient editIngredientRest(@PathVariable(name = "id") Long id,
                                          @RequestParam(value = "name") String name,
                                          @RequestParam(value = "spicy") boolean spicy,
-                                         @RequestParam(value = "veggie") boolean vegie) {
+                                         @RequestParam(value = "vegie") boolean vegie) {
         if (ingredientService.findById(id).isPresent()) {
             if (ingredientService.findAll().stream().filter(Ingredient::isSpicy).map(Ingredient::getId).count() == 4)
                 throw new NoMoreSpicyIngredientsException();
@@ -83,11 +102,10 @@ public class IngredientController {
     @DeleteMapping("/{id}")
     public void deleteIngredient(@ModelAttribute Ingredient ingredient, @PathVariable Long id) {
         //delete Ingredient
-        if (ingredientService.findById(id).isPresent()) {
-            ingredient = ingredientService.findById(id).get();
-            ingredientService.delete(ingredient);
-        }
-        throw new IngredientNotFoundException();
+        if (!ingredientService.findById(id).isPresent())
+            throw new IngredientNotFoundException();
+        ingredient = ingredientService.findById(id).get();
+        ingredientService.delete(ingredient);
     }
 
     /*@GetMapping

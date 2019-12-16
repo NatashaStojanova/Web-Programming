@@ -1,59 +1,66 @@
-import React, {Component} from 'react';
-import Moment from "react-moment";
+import React, {Component, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import axios from "../../../custom-axios/axios";
 
+const Pizza = (props) => {
+    let [pizzaIngredients, setIngredient] = useState();
 
-class Pizza extends Component {
+    useEffect(() => {
+        axios.get("/pizzas/" + props.pizza.id + "/ingredients").then((data) => {
+            const ingredients = data.data.map((ingredient, index) => {
+                return (
+                    <li className="list-group" key={index}>{ingredient.name}</li>
+                );
+            });
+            setIngredient(ingredients);
+        });
+    }, []);
 
-    render() {
-
-        return (
-            <div className={this.props.colClass}>
-                <div className="card">
-                    <div className="pizzas">
-                        {this.cardHeader()}
-                        <hr/>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-
-    cardHeader() {
+    const PizzaHeader = () => {
         return (
             <div className="card-header">
                 <div className="row">
                     <div className="col-md-6">
-                        {this.props.pizza.name}
+                        {props.pizza.name}
                     </div>
                     <div className="col-md-6 text-right">
-                        <a href="#" className="btn btn-light" title="Следи">
-                            <i className="fa fa-star"></i>
-                        </a>
-                        {/* <Link className="btn btn-default" to={"/consultations/"+this.props.slotId+"/edit"}><i className="fa fa-pencil"></i></Link>
-                        <a onClick={()=>this.props.onDelete(this.props.slotId)} className="btn btn-danger" title="Избриши">
-                            <i className="fa fa-trash"></i>
-                        </a>*/}
+                        <button href="#" className="btn btn-light" title="Order">
+                            <i className="fa fa-star"/>
+                        </button>
+                        <button className="btn btn-default" to={"/pizzas/" + props.pizza.id + "/edit"}><i
+                            className="fa fa-pencil"/>Edit
+                        </button>
+                        <button onClick={() => props.onDelete(props.pizza.id)} className="btn btn-danger"
+                                title="Delete">
+                            <i className="fa fa-trash"/>
+                        </button>
                     </div>
-
-                </div>
-            </div>);
-
-    }
-
-
-    /*slotRoom() {
-        return (
-            <div className="row">
-                <div className="col-md-6 font-weight-bold">Просторија</div>
-                <div className="col-md-6">
-                    <a href="/Home/Rooms">{this.props.term.room.name}</a>
                 </div>
             </div>
         );
-    }*/
-}
+    };
 
+    const PizzaBody = () => {
+        return (
+            <div className="row">
+                <div className="col-md-6 font-weight-bold">Ingredients</div>
+                <ul className="list-group">
+                    {pizzaIngredients}
+                </ul>
+            </div>
+        );
+    };
+
+    return (
+        <div className={props.colClass}>
+            <div className="card">
+                <div className="pizzas">
+                    {PizzaHeader()}
+                    {PizzaBody()}
+                </div>
+            </div>
+        </div>
+    )
+};
 
 export default Pizza;

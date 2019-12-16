@@ -12,19 +12,24 @@ const IngredientService = {
             }
         })
     },
-    /* addConsultationTerm: (term) => {
-         const data = {
-             ...term,
-             roomName:term.room.name
-         }
-         const formParams = qs.stringify(data);
-         return axios.post("/api/consultations",formParams, {
-             headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded',
-                 'professorId':'kostadin.mishev'
-             }
-         });
-     },*/
+
+    addIngredient: (ingredient) => {
+        const data = {
+            ...ingredient,
+            ingredientName: ingredient.name
+        };
+        const formParams = qs.stringify(data);
+        return axios.post("/ingredients", formParams, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+    },
+
+    deleteIngredient(ingredientID) {
+        return axios.delete("/ingredients/" + ingredientID)
+    },
+
     updateIngredient: (ingredient) => {
         const data = {
             ...ingredient,
@@ -38,6 +43,6 @@ const IngredientService = {
             }
         });
     }
-}
+};
 
 export default IngredientService;
