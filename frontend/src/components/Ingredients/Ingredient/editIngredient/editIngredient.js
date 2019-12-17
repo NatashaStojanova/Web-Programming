@@ -19,7 +19,7 @@ const EditIngredient = (props) => {
                 "id": id,
                 "name": e.target.ingredientName.value,
                 "spicy": e.target.isSpicy.checked,
-                "veggie": e.target.isVegie.checked
+                "vegie": e.target.isVegie.checked
             }
         );
     };
@@ -47,7 +47,7 @@ const EditIngredient = (props) => {
                     <label htmlFor="veggie" className="col-sm-4 offset-sm-1 text-left">Veggie</label>
                     <div className="col-sm-6 col-xl-4">
                         <input type="checkbox" onChange={handleTermOnChange} checked={ingredient.vegie}
-                               className="form-control" id="veggie" name={"isVggie"}/>
+                               className="form-control" id="veggie" name={"isVegie"}/>
                     </div>
                 </div>
                 <div className="form-group row">

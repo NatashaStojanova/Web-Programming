@@ -13,38 +13,21 @@ const PizzaService = {
         })
     },
 
-    fetchPizzaIngredients: () => {
-        return axios.get("/pizzas/:id/ingredients");
-    }
 
-
-    /* addConsultationTerm: (term) => {
-         const data = {
-             ...term,
-             roomName:term.room.name
-         }
-         const formParams = qs.stringify(data);
-         return axios.post("/api/consultations",formParams, {
-             headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded',
-                 'professorId':'kostadin.mishev'
-             }
-         });
-     },*/
-    /*updateConsultationTerm : (term) => {
+    addPizza: (pizza) => {
         const data = {
-            ...term,
-            roomName:term.room.name
-        }
-        const slotId= term.slotId;
+            ...pizza,
+            pizzaName: pizza.name
+        };
         const formParams = qs.stringify(data);
-        return axios.patch("/api/consultations/"+slotId,formParams, {
+        return axios.post("/pizzas", formParams, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'professorId':'kostadin.mishev'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-    }*/
+    },
+
+
 }
 
 export default PizzaService;

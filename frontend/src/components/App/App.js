@@ -8,6 +8,8 @@ import PizzaService from "../../service/pizzaService";
 import IngredientService from "../../service/ingredientService";
 import AddIngredient from "../Ingredients/addIngredient/addIngredient"
 import EditIngredient from "../Ingredients/Ingredient/editIngredient/editIngredient"
+import AddPizza from "../Pizzas/addPizza/addPizza";
+import Pizza from "../Pizzas/Pizza/pizza";
 
 class App extends Component {
 
@@ -15,7 +17,8 @@ class App extends Component {
         super(props);
         this.state = {
             pizzas: [],
-            ingredients: []
+            ingredients: [],
+            pizzaIngredients: []
         }
     }
 
@@ -88,6 +91,22 @@ class App extends Component {
     });
 
 
+    addNewPizza = ((newPizza) => {
+        PizzaService.addPizza(newPizza).then(resp => {
+            const pizza = resp.data;
+            this.setState((prevState) => {
+                const newPizzas = prevState.pizzas.map((item) => {
+                    return item;
+                });
+                newPizzas.push(pizza);
+                return {
+                    "pizzas": newPizzas
+                }
+            });
+        });
+    });
+
+
     render() {
         return (
             <div className="App">
@@ -109,6 +128,9 @@ class App extends Component {
                             </Route>
                             <Route path="/ingredients/new" exact
                                    render={() => <AddIngredient onSubmit={this.addNewIngredient}/>}>
+                            </Route>
+                            <Route path="/pizzas/new" exact
+                                   render={() => <AddPizza onSubmit={this.addNewPizza}/>}>
                             </Route>
 
                             <Redirect to={"/"}/>

@@ -1,9 +1,6 @@
 package mk.ukim.finki.natashastojanova.vp.web.controllers;
 
-import mk.ukim.finki.natashastojanova.vp.exceptions.IngredientNotFoundException;
-import mk.ukim.finki.natashastojanova.vp.exceptions.PizzaAlreadyExistsException;
-import mk.ukim.finki.natashastojanova.vp.exceptions.PizzaNotFoundException;
-import mk.ukim.finki.natashastojanova.vp.exceptions.PizzaNotVeggieException;
+import mk.ukim.finki.natashastojanova.vp.exceptions.*;
 import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredient;
@@ -47,7 +44,7 @@ public class PizzaController {
     }
 
 
-    @PostMapping
+   /* @PostMapping
     public ModelAndView addPizza(@ModelAttribute(name = "pizza") Pizza newPizza, @RequestParam(name = "newIngredients") ArrayList<Long> newIngredients) {
         //add new pizza
         pizzaService.findAll().forEach(pizza1 -> {
@@ -93,7 +90,28 @@ public class PizzaController {
         pizza.setIngredientList(pizzaIngredients);
         pizzaService.save(pizza);
         return new ModelAndView("redirect:/pizzas");
+    }*/
+
+    // addNewPizza
+    @PostMapping
+    public Pizza addPizza(@RequestParam(value = "name") String name,
+                          @RequestParam(value = "description") String description,
+                          @RequestParam(value = "veggie") boolean veggie) {
+
+
+        pizzaService.findAll().forEach(pizza1 -> {
+            if (pizza1.getName().equals(name))
+                throw new PizzaAlreadyExistsException();
+        });
+
+        Pizza newPizza = new Pizza();
+        newPizza.setName(name);
+        newPizza.setDescription(description);
+        newPizza.setVeggie(veggie);
+        pizzaService.save(newPizza);
+        return newPizza;
     }
+
 
     @PatchMapping("/{id}")
     public ModelAndView editPizza(@ModelAttribute(name = "pizza") Pizza pizza, @PathVariable(name = "id") Long id, @RequestParam(name = "newIngredients") ArrayList<Long> newIngredients) {
