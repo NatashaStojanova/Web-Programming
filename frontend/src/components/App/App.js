@@ -10,6 +10,8 @@ import AddIngredient from "../Ingredients/addIngredient/addIngredient"
 import EditIngredient from "../Ingredients/Ingredient/editIngredient/editIngredient"
 import AddPizza from "../Pizzas/addPizza/addPizza";
 import Pizza from "../Pizzas/Pizza/pizza";
+import DetailsIngredient from "../Ingredients/Ingredient/detailsIngredient/detailsIngredients";
+import HomePage from "../HomePage/homePage";
 
 class App extends Component {
 
@@ -115,7 +117,7 @@ class App extends Component {
                     <main role="main" className="mt-3">
                         <div className="container">
                             <Route path={"/"} exact render={() =>
-                                <Pizzas pizzas={this.state.pizzas}/>}>
+                                <HomePage/>}>
                             </Route>
                             <Route path={"/pizzas"} exact render={() => <Pizzas pizzas={this.state.pizzas}/>}>
                             </Route>
@@ -125,6 +127,9 @@ class App extends Component {
                             </Route>
                             <Route path="/ingredients/:id/edit" exact render={() =>
                                 <EditIngredient onSubmit={this.updateIngredient}/>}>
+                            </Route>
+                            <Route path="/ingredients/:id/details" exact render={() =>
+                                <DetailsIngredient/>}>
                             </Route>
                             <Route path="/ingredients/new" exact
                                    render={() => <AddIngredient onSubmit={this.addNewIngredient}/>}>

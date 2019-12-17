@@ -159,7 +159,7 @@ public class PizzaController {
     }
 
     @GetMapping
-    public Page<Pizza> getAllPizzas(@RequestParam(name = "totalIngredients", required = false, defaultValue = "0") Long totalIngredients, @PageableDefault(value = 5) Pageable pageable) {
+    public Page<Pizza> getAllPizzas(@RequestParam(name = "totalIngredients", required = false, defaultValue = "0") Long totalIngredients, @PageableDefault Pageable pageable) {
         List<Pizza> finalList = new ArrayList<>();
         if (totalIngredients > 0) {
             pizzaService.findAll().forEach(pizza1 -> {

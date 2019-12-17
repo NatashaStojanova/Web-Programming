@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {useParams} from 'react-router-dom';
+import {useParams, withRouter} from 'react-router-dom';
 import axios from '../../../../custom-axios/axios'
 
 const EditIngredient = (props) => {
@@ -14,6 +14,7 @@ const EditIngredient = (props) => {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
+        props.history.push('/ingredients');
         props.onSubmit(
             {
                 "id": id,
@@ -86,4 +87,4 @@ const EditIngredient = (props) => {
     )
 };
 
-export default EditIngredient
+export default withRouter(EditIngredient);

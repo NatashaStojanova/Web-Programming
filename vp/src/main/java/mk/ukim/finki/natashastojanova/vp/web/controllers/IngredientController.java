@@ -3,6 +3,7 @@ package mk.ukim.finki.natashastojanova.vp.web.controllers;
 import mk.ukim.finki.natashastojanova.vp.exceptions.IngredientAlreadyExistsException;
 import mk.ukim.finki.natashastojanova.vp.exceptions.IngredientNotFoundException;
 import mk.ukim.finki.natashastojanova.vp.exceptions.NoMoreSpicyIngredientsException;
+import mk.ukim.finki.natashastojanova.vp.exceptions.PizzaNotFoundException;
 import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.model.PizzaIngredient;
@@ -153,12 +154,12 @@ public class IngredientController {
         throw new IngredientNotFoundException();
     }
 
-    @GetMapping("/{id}/pizzas")
+    /*@GetMapping("/{id}/pizzas")
     public ModelAndView getAllPizzasWithId(HttpServletRequest req, HttpServletResponse resp, @PathVariable(name = "id") Long id) throws UnsupportedEncodingException {
-        /*resp.setContentType("text/html; charset=UTF-8");
+        *//*resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        HttpSession session = context.getSession();*/
+        HttpSession session = context.getSession();*//*
 
         if (ingredientService.findById(id).isPresent()) {
             List<Pizza> pizzas = pizzaIngredientService.findAll().stream()
@@ -170,6 +171,22 @@ public class IngredientController {
             return modelAndView;
         } else
             throw new IngredientNotFoundException();
+    }*/
+
+    //za daden ingredient->vrati mi gi pizzite vo koi se sostoi
+    @GetMapping("/{id}/pizzas")
+    public List<Pizza> getPizzas(@PathVariable Long id) {
+        List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+        if (ingredientService.findById(id).isPresent()) {
+            Ingredient i = ingredientService.findById(id).get();
+            List<Pizza> pizzas = new ArrayList<>();
+            i.getPizzaList().forEach(pizzaIngredient -> {
+                pizzas.add(pizzaIngredient.getPizza());
+            });
+            return pizzas;
+        } else {
+            throw new IngredientNotFoundException();
+        }
     }
 
     @GetMapping("/addIngredient")
