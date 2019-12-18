@@ -135,7 +135,8 @@ class App extends Component {
                                    render={() => <AddIngredient onSubmit={this.addNewIngredient}/>}>
                             </Route>
                             <Route path="/pizzas/new" exact
-                                   render={() => <AddPizza onSubmit={this.addNewPizza}/>}>
+                                   render={() => <AddPizza ingredients={this.state.ingredients}
+                                                           onSubmit={this.addNewPizza}/>}>
                             </Route>
 
                             <Redirect to={"/"}/>

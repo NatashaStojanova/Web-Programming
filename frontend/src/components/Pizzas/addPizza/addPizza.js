@@ -1,7 +1,14 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom';
+import ShowIngredients from "./showIngredients/showIngredients";
 
 const AddPizza = (props) => {
+    const ingredients = props.ingredients.map((ingredient, index) => {
+        return (
+            <ShowIngredients ingredient={ingredient} key={index} onDelete={props.onDelete}
+                             colClass={"col-md-6 mt-2 col-sm-6"}/>
+        );
+    });
     const onFormSubmit = (e) => {
         e.preventDefault();
         props.history.push('/pizzas');
@@ -13,13 +20,12 @@ const AddPizza = (props) => {
             }
         );
     };
-
     return (
         <div className="row">
             <form className="card" onSubmit={onFormSubmit}>
                 <h4 className="text-upper text-left">Add Pizza</h4>
                 <div className="form-group row">
-                    <label htmlFor="ingredient" className="col-sm-4 offset-sm-1 text-left">Name</label>
+                    <label htmlFor="pizza" className="col-sm-4 offset-sm-1 text-left">Name</label>
                     <div className="col-sm-6">
                         <input type="text"
                                className="form-control" id="ingredient" name={"pizzaName"}
@@ -51,23 +57,29 @@ const AddPizza = (props) => {
                             Add Pizza
                         </button>
                     </div>
-                    {/*<div
-                        className="offset-sm-1 col-sm-3  text-center">
-                        <button
-                            className="btn btn-warning text-upper">
-                            Reset
-                        </button>
-                    </div>
-                    <div
-                        className="offset-sm-1 col-sm-3  text-center">
-                        <button
-                            className="btn btn-danger text-upper">
-                            Cancel
-                        </button>
-                    </div>*/}
                 </div>
             </form>
+            <div className="row">
+                <h4 className="text-upper text-left">Ingredients</h4>
+                <div className="table-responsive">
+                    <table className="table tr-history table-striped small">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Spicy</th>
+                            <th scope="col">Veggie</th>
+                            <th scope="col">Add Ingredient</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {ingredients}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
+
     )
 };
 

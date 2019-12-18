@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import Ingredient from "./Ingredient/ingredient";
 import {Link} from "react-router-dom";
 
@@ -19,7 +19,7 @@ const Ingredients = (props) => {
                         <th scope="col">Name</th>
                         <th scope="col">Spicy</th>
                         <th scope="col">Veggie</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">Order</th>
                     </tr>
                     </thead>
                     <tbody>

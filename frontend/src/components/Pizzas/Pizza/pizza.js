@@ -1,5 +1,4 @@
-import React, {Component, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import axios from "../../../custom-axios/axios";
 
 const Pizza = (props) => {

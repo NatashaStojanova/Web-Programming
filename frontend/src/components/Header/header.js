@@ -20,9 +20,9 @@ const Header = (props) => {
                             <Link to={"/ingredients"} className="nav-link">Ingredients</Link>
                         </li>
                     </ul>
-                    <form className="form-inline mt-2 mt-md-0 ml-3">
+                  {/*  <form className="form-inline mt-2 mt-md-0 ml-3">
                         <a className="btn btn-outline-info my-2 my-sm-0" href="#">Login</a>
-                    </form>
+                    </form>*/}
                 </div>
             </nav>
         </header>

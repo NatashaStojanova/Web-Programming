@@ -13,6 +13,17 @@ const PizzaService = {
         })
     },
 
+    fetchIngredients: () => {
+        return axios.get("/ingredients");
+    },
+    fetchIngredientsPaged: (page, pageSize) => {
+        return axios.get("/ingredients", {
+            headers: {
+                'page': page, 'page-size': pageSize
+            }
+        })
+    },
+
 
     addPizza: (pizza) => {
         const data = {
