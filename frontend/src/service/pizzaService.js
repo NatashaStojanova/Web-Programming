@@ -24,21 +24,17 @@ const PizzaService = {
         })
     },
 
-
     addPizza: (pizza) => {
         const data = {
             ...pizza,
-            pizzaName: pizza.name
         };
         const formParams = qs.stringify(data);
         return axios.post("/pizzas", formParams, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         });
     },
-
-
-}
+};
 
 export default PizzaService;

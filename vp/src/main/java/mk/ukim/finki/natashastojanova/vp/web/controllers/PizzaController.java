@@ -24,6 +24,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +40,7 @@ public class PizzaController {
     private IngredientService ingredientService;
     private PizzaService pizzaService;
     private PizzaIngredientService pizzaIngredientService;
+    private static final Pattern p = Pattern.compile("[^\\d]*[\\d]+[^\\d]+([\\d]+)");
 
     public PizzaController(IngredientService ingredientService, PizzaService pizzaService, PizzaIngredientService pizzaIngredientService) {
         this.ingredientService = ingredientService;
@@ -48,7 +53,7 @@ public class PizzaController {
     public ModelAndView addPizza(@ModelAttribute(name = "pizza") Pizza newPizza, @RequestParam(name = "newIngredients") ArrayList<Long> newIngredients) {
         //add new pizza
         pizzaService.findAll().forEach(pizza1 -> {
-            if (pizza1.getName().equals(newPizza.getName()))
+            if (pizza1.getName().eq uals(newPizza.getName()))
                 throw new PizzaAlreadyExistsException();
         });
 
@@ -93,7 +98,43 @@ public class PizzaController {
     }*/
 
     // addNewPizza
-    @PostMapping
+    /*@PostMapping
+    public Pizza addPizza(@RequestParam(value = "name") String name,
+                          @RequestParam(value = "description") String description,
+                          @RequestParam(value = "veggie") boolean veggie,
+                          @RequestParam(value="id") Long ingID,
+                          @RequestParam(value = "amount") Integer amont) {
+
+        pizzaService.findAll().forEach(pizza1 -> {
+            if (pizza1.getName().equals(name))
+                throw new PizzaAlreadyExistsException();
+        });
+
+        Pizza newPizza = new Pizza();
+        newPizza.setName(name);
+        newPizza.setDescription(description);
+        newPizza.setVeggie(veggie);
+        pizzaService.save(newPizza);
+        List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+        if(ingredientService.findById(ingID).isPresent()){
+            PizzaIngredient pizzaIngredient = new PizzaIngredient();
+            pizzaIngredient.setPizza(newPizza);
+            pizzaIngredient.setIngredient(ingredientService.findById(ingID).get());
+            PizzaIngredientCompositeKey compositeKey = new PizzaIngredientCompositeKey();
+            compositeKey.setPizzaId(newPizza.getId());
+            compositeKey.setIngredientid(ingID);
+            pizzaIngredient.setId(compositeKey);
+            pizzaIngredients.add(pizzaIngredient);
+            pizzaIngredientService.save(pizzaIngredient);
+            newPizza.setIngredientList(pizzaIngredients);
+            return newPizza;
+        }
+        else
+            throw new IngredientNotFoundException();
+    }
+*/
+    //only pizza(without ingredients) addNewPizza
+    /*@PostMapping
     public Pizza addPizza(@RequestParam(value = "name") String name,
                           @RequestParam(value = "description") String description,
                           @RequestParam(value = "veggie") boolean veggie) {
@@ -110,6 +151,83 @@ public class PizzaController {
         newPizza.setVeggie(veggie);
         pizzaService.save(newPizza);
         return newPizza;
+    }*/
+
+    @PostMapping
+    public Pizza addPizza(@RequestParam Map<String, String> newIngredients) {
+        //add new pizza
+        String name = newIngredients.get("name");
+        String description = newIngredients.get("description");
+        boolean veggie = newIngredients.get("veggie").equals("true");
+
+        Set<String> keys = newIngredients.keySet();
+        List<Long> ingredients = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile("[0-9]+");
+        keys.forEach(val -> {
+            if (val.contains("newIngredient")) {
+                Matcher m = pattern.matcher(val);
+                String ingID = null;
+                if (m.find()) {
+                    ingID = (m.group(0)); // second matched digits
+                    ingredients.add(Long.parseLong(newIngredients.get(val)));
+                }
+            }
+        });
+
+        pizzaService.findAll().forEach(pizza1 -> {
+            if (pizza1.getName().equals(name))
+                throw new PizzaAlreadyExistsException();
+        });
+        pizzaService.findAll().forEach(pizza1 -> {
+            if (pizza1.getName().equals(name))
+                throw new PizzaAlreadyExistsException();
+        });
+
+        Pizza newPizza = new Pizza();
+        newPizza.setName(name);
+        newPizza.setDescription(description);
+        newPizza.setVeggie(veggie);
+        pizzaService.save(newPizza);
+
+        if (newPizza.getVeggie()) {
+            List<Ingredient> ings = new ArrayList<>();
+            ingredients.forEach(ingID -> {
+                if (ingredientService.findById(ingID).isPresent()) {
+                    Ingredient ingredient = ingredientService.findById(ingID).get();
+                    ings.add(ingredient);
+                } else
+                    throw new IngredientNotFoundException();
+            });
+            //sega vo ings imam lista od ingredients i treba da proveram dali se veggie
+            ings.forEach(ing -> {
+                if (!ing.isVegie()) {
+                    throw new PizzaNotVeggieException();
+                }
+            });
+        }
+
+        pizzaService.save(newPizza);
+        Pizza pizza = pizzaService.findByName(newPizza.getName());
+        List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+        //for each id in newIngredients(which is List), check if the id is present,does it exist in db
+        ingredients.forEach(ingID -> {
+            if (ingredientService.findById(ingID).isPresent()) {
+                PizzaIngredient pizzaIngredient = new PizzaIngredient();
+                pizzaIngredient.setPizza(pizza);
+                pizzaIngredient.setIngredient(ingredientService.findById(ingID).get());
+                PizzaIngredientCompositeKey compositeKey = new PizzaIngredientCompositeKey();
+                compositeKey.setPizzaId(pizza.getId());
+                compositeKey.setIngredientid(ingID);
+                pizzaIngredient.setId(compositeKey);
+                pizzaIngredients.add(pizzaIngredient);
+                pizzaIngredientService.save(pizzaIngredient);
+            } else
+                throw new IngredientNotFoundException();
+        });
+        pizza.setIngredientList(pizzaIngredients);
+        pizzaService.save(pizza);
+        return pizza;
     }
 
 

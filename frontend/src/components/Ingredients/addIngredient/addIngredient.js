@@ -1,5 +1,5 @@
 import React from 'react'
-import {withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 const AddIngredient = (props) => {
     const onFormSubmit = (e) => {
@@ -52,16 +52,17 @@ const AddIngredient = (props) => {
                     <div
                         className="offset-sm-1 col-sm-3  text-center">
                         <button
+                            type="reset"
                             className="btn btn-warning text-upper">
                             Reset
                         </button>
                     </div>
                     <div
                         className="offset-sm-1 col-sm-3  text-center">
-                        <button
-                            className="btn btn-danger text-upper">
+                        <Link to={"/ingredients"}
+                              className="btn btn-danger text-upper">
                             Cancel
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </form>

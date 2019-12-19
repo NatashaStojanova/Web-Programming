@@ -5,10 +5,8 @@ const HomePage = () => {
 
     return (
         <div>
-            <h1>Downtown Pizza</h1>
-            <img src={logo} alt="Logo" height={400}/>
+            <img src={logo} alt="Logo" height={600} width={1000}/>
         </div>
     )
-
-}
+};
 export default HomePage;

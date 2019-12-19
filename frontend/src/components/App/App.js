@@ -54,7 +54,8 @@ class App extends Component {
             const newIngredient = response.data;
             //update state
             this.setState((prevState) => {
-                const newIngRef = prevState.ingredients.filter((item) => {
+                const newIngRef = prevState.ingredients.map((item) => {
+                    //debugger;
                     if (item.id === newIngredient.id) {
                         return newIngredient;
                     }
@@ -93,14 +94,14 @@ class App extends Component {
     });
 
 
-    addNewPizza = ((newPizza) => {
+    savePizza = ((newPizza) => {
         PizzaService.addPizza(newPizza).then(resp => {
-            const pizza = resp.data;
+            const newPiz = resp.data;
             this.setState((prevState) => {
                 const newPizzas = prevState.pizzas.map((item) => {
                     return item;
                 });
-                newPizzas.push(pizza);
+                newPizzas.push(newPiz);
                 return {
                     "pizzas": newPizzas
                 }
@@ -135,8 +136,7 @@ class App extends Component {
                                    render={() => <AddIngredient onSubmit={this.addNewIngredient}/>}>
                             </Route>
                             <Route path="/pizzas/new" exact
-                                   render={() => <AddPizza ingredients={this.state.ingredients}
-                                                           onSubmit={this.addNewPizza}/>}>
+                                   render={() => <AddPizza onSubmit={this.savePizza}/>}>
                             </Route>
 
                             <Redirect to={"/"}/>

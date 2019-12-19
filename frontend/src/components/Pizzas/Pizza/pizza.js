@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "../../../custom-axios/axios";
+import {Link} from "react-router-dom";
 
 const Pizza = (props) => {
     let [pizzaIngredients, setIngredient] = useState();
@@ -19,19 +20,16 @@ const Pizza = (props) => {
         return (
             <div className="card-header">
                 <div className="row">
-                    <div className="col-md-6">
-                        {props.pizza.name}
+                    <div className="col-md-6 font-weight-bold">
+                        Pizza: {props.pizza.name}
                     </div>
                     <div className="col-md-6 text-right">
-                        <button href="#" className="btn btn-light" title="Order">
-                            <i className="fa fa-star"/>
-                        </button>
                         <button className="btn btn-default" to={"/pizzas/" + props.pizza.id + "/edit"}><i
-                            className="fa fa-pencil"/>Edit
+                            className="fa fa-edit"/>
                         </button>
-                        <button onClick={() => props.onDelete(props.pizza.id)} className="btn btn-danger"
-                                title="Delete">
-                            <i className="fa fa-trash"/>
+                        <button onClick={() => props.onDelete(props.pizza.id)}
+                                className="btn btn-sm btn-outline-secondary ">
+                            <span className="fa fa-trash"/>
                         </button>
                     </div>
                 </div>
