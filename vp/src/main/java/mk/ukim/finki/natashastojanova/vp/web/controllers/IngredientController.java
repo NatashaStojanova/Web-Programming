@@ -238,5 +238,12 @@ public class IngredientController {
         modelAndView.addObject("ingredient", ingredient);
         return modelAndView;
     }
+
+    @GetMapping(params = "term")
+    public List<Ingredient> searchIngredients(@RequestParam String term) {
+        return ingredientService.searchIngredients(term);
+    }
+
+
 }
 

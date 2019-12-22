@@ -13,6 +13,7 @@ import Pizza from "../Pizzas/Pizza/pizza";
 import DetailsIngredient from "../Ingredients/Ingredient/detailsIngredient/detailsIngredients";
 import HomePage from "../HomePage/homePage";
 
+
 class App extends Component {
 
     constructor(props) {
@@ -46,6 +47,8 @@ class App extends Component {
                     "ingredients": resp.data.content
                 }
             })
+        }).catch(error => {
+            alert('there are no errors');
         });
     }
 
@@ -93,6 +96,13 @@ class App extends Component {
         });
     });
 
+    searchData = (searchTerm) => {
+        IngredientService.searchIngredients(searchTerm).then((response) => {
+            this.setState({
+                "ingredients": response.data,
+            })
+        })
+    }
 
     savePizza = ((newPizza) => {
         PizzaService.addPizza(newPizza).then(resp => {
@@ -114,7 +124,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Router>
-                    <Header/>
+                    <Header onSearch={this.searchData}/>
                     <main role="main" className="mt-3">
                         <div className="container">
                             <Route path={"/"} exact render={() =>

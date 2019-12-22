@@ -48,4 +48,9 @@ public class IngredientServiceImpl implements IngredientService {
         return ingredientRepository.findAll(pageable);
     }
 
+    @Override
+    public List<Ingredient> searchIngredients(String term) {
+        return ingredientRepository.findAllByNameContains(term);
+    }
+
 }

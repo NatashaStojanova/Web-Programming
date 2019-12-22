@@ -22,4 +22,6 @@ public interface IngredientService {
 
     public Page<Ingredient> findPaginated(Pageable pageable);
 
+    List<Ingredient> searchIngredients(String term);
+
 }
