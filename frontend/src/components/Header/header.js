@@ -21,7 +21,7 @@ const Header = (props) => {
                             <Link to={"/ingredients"} className="nav-link">Ingredients</Link>
                         </li>
                     </ul>
-                    <FormSearch onSearch={props.onSearch}/>
+                    <FormSearch onSearchPizza={props.onSearchPizza} onSearch={props.onSearch}/>
                 </div>
             </nav>
         </header>

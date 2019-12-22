@@ -1,5 +1,6 @@
 package mk.ukim.finki.natashastojanova.vp.service;
 
+import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,8 @@ public interface PizzaService {
     public Pizza findByName(String name);
 
     public Page<Pizza> findPaginated(Pageable pageable);
+
+    List<Pizza> searchPizza(String term);
 
     /*public List<Pizza> findSpicyPizzas();*/
 }

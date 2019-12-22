@@ -5,6 +5,7 @@ const FormSearch = (props) => {
     const onSearch = (e) => {
         e.preventDefault();
         props.onSearch(e.target.searchTerm.value);
+        props.onSearchPizza(e.target.searchTerm.value);
     }
 
 

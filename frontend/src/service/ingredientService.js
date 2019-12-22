@@ -30,8 +30,8 @@ const IngredientService = {
         return axios.delete("/ingredients/" + ingredientID)
     },
 
-    searchIngredients: (searchTerm) => {
-        return axios.get(`/ingredients?term=${searchTerm}`);
+    searchIngredients: (searchIngredient) => {
+        return axios.get(`/ingredients?term=${searchIngredient}`);
     },
 
 

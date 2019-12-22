@@ -24,6 +24,10 @@ const PizzaService = {
         })
     },
 
+    searchPizza: (searchPizza) => {
+        return axios.get(`/pizzas?term=${searchPizza}`);
+    },
+
     addPizza: (pizza) => {
         const data = {
             ...pizza,

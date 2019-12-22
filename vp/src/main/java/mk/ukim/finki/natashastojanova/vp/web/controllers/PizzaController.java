@@ -410,4 +410,9 @@ public class PizzaController {
         /*return pizzaService.findSpicyPizzas();*/
     }
 
+    @GetMapping(params = "term")
+    public List<Pizza> searchPizza(@RequestParam String term) {
+        return pizzaService.searchPizza(term);
+    }
+
 }

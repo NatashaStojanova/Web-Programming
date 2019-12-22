@@ -1,5 +1,6 @@
 package mk.ukim.finki.natashastojanova.vp.service.implementation;
 
+import mk.ukim.finki.natashastojanova.vp.model.Ingredient;
 import mk.ukim.finki.natashastojanova.vp.model.Pizza;
 import mk.ukim.finki.natashastojanova.vp.repository.IPizzaRepository;
 import mk.ukim.finki.natashastojanova.vp.service.PizzaService;
@@ -55,6 +56,11 @@ public class PizzaServiceImpl implements PizzaService {
     @Override
     public Page<Pizza> findPaginated(Pageable pageable) {
         return pizzaRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Pizza> searchPizza(String term) {
+        return pizzaRepository.findAllByNameContains(term);
     }
 
     /*@Override

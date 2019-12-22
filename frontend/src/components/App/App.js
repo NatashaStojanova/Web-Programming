@@ -96,10 +96,18 @@ class App extends Component {
         });
     });
 
-    searchData = (searchTerm) => {
-        IngredientService.searchIngredients(searchTerm).then((response) => {
+    searchIng = (searchIngredient) => {
+        IngredientService.searchIngredients(searchIngredient).then((response) => {
             this.setState({
                 "ingredients": response.data,
+            })
+        })
+    }
+
+    searchPizza = (searchPizza) => {
+        PizzaService.searchPizza(searchPizza).then((response) => {
+            this.setState({
+                "pizzas": response.data,
             })
         })
     }
@@ -124,7 +132,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Router>
-                    <Header onSearch={this.searchData}/>
+                    <Header onSearch={this.searchIng} onSearchPizza={this.searchPizza}/>
                     <main role="main" className="mt-3">
                         <div className="container">
                             <Route path={"/"} exact render={() =>
